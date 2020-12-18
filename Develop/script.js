@@ -12,41 +12,45 @@ function randomNumber (min, max) {
   return value;
 };
 // random character generator functions
-//generates a random special character
+//**generates a random special character
 function randomSC() {
   var value =  specialCharacters[randomNumber(0,(specialCharacters.length)-1)];
   return value;
 };
-//generates a random lowercase character
+//**generates a random lowercase character
 function randomLower() {
   var value = lowercase[randomNumber(0,(lowercase.length)-1)];
   return value;
 };
-//generates a random uppercase character
+//**generates a random uppercase character
 function randomUpper() {
   var value = uppercase[randomNumber(0,(uppercase.length)-1)];
   return value;
 }
-//generates a random numeric character
+//**generates a random numeric character
 function randomNC() {
   var value = numeric[randomNumber(0,(numeric.length)-1)];
   return value;
 }
 
-console.log(randomLower(), randomUpper(), randomSC(), randomNC());
+//console check to ensure the functions are working
+//console.log(randomLower(), randomUpper(), randomSC(), randomNC());
 
-function generatePassword () {
+//function to ensure password is a correct length
+var passBegins = function() {
+  var passwordLength = prompt("Please enter the password length (8 to 128 characters)");
+  return passwordLength;
+  }
+
+var charCriteria = function() {
   //places four functions in an array
   var workingArray = [randomLower, randomUpper, randomSC, randomNC];
-   console.log(workingArray); 
-   //gets the password length
-  var passwordLength = prompt("Please enter the password length (8 to 128 characters)");
-  //asks whether a specific type of character should be included, removes it from the array if not
+  //checks the length of the array 
+  console.log(workingArray); 
   var yesLowercase = confirm ("Would you like your password to include lower-case characters?");
   if (yesLowercase === false) {
     var detector = workingArray.indexOf(randomLower);
     workingArray.splice(detector, 1);
-    console.log(workingArray[0]);
   }
   var yesUppercase = confirm ("Would you like your password to include upper-case characters?");
   if (yesUppercase === false) {
@@ -66,11 +70,28 @@ function generatePassword () {
   //checks to see if there is at least one item in the array
   if (workingArray.length < 1) {
     alert("I'm sorry, you need to have at least one character type to generate a password, please try again");
-  //  var workingArray = [randomLower, randomUpper, randomSC, randomNC];
-    generatePassword();
+    var workingArray = [randomLower, randomUpper, randomSC, randomNC];
+    charCriteria();
+    console.log(workingArray);
+    return workingArray;
+    }
+  else {
+    return workingArray;
   }
+  
+}
+// generate password function
+function generatePassword () {
+  specLength = passBegins();
+  if (specLength < 8 || specLength > 128) {
+    window.alert("You did not enter a valid number, please enter a number between 8 and 128")
+    specLength = passBegins();
+    }
+  console.log("The length within the generate password is " + specLength);
+  workingArray = charCriteria();
+  //asks whether a specific type of character should be included, removes it from the array if not
 
-  console.log (yesLowercase, passwordLength, workingArray);
+  console.log (specLength, workingArray);
   password = "";
   //ensures at least one type of character is in the password
   for (var i=0; i<workingArray.length; i++) {
@@ -80,7 +101,7 @@ function generatePassword () {
   //resets the password length variable
   var runningLength = password.length;
   //addresses the rest of the variable
- for (var i=0; i<passwordLength - runningLength; i++) {
+ for (var i=0; i<specLength - runningLength; i++) {
    var passchar = workingArray[randomNumber(0,(workingArray.length-1))]();
    password = password + passchar;
   }
@@ -111,7 +132,7 @@ var generateBtn = document.querySelector("#generate");
 function writePassword() {
   // -- prompt to generate a password when user presses button
   if (window.confirm("If you would like to proceed with password generation, press OK")) {
-  var password = generatePassword();
+  password = generatePassword();
   var passwordText = document.querySelector("#password");
 
   passwordText.value = password; 
