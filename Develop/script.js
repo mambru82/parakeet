@@ -1,5 +1,10 @@
 // Assignment code here
 //WHEN I click the button to generate a password
+// -- prompt to generate a password 
+
+function generatePassword () {
+  console.log ("end of generatePassword function");
+}
 //THEN I am presented with a series of prompts for password criteria
 //WHEN prompted for password criteria
 //THEN I select which criteria to include in the password
@@ -19,10 +24,15 @@ var generateBtn = document.querySelector("#generate");
 
 // Write password to the #password input
 function writePassword() {
+  if (window.confirm("If you would like to proceed with password generation, press OK")) {
   var password = generatePassword();
   var passwordText = document.querySelector("#password");
 
-  passwordText.value = password;
+  passwordText.value = password; 
+  } else {
+    window.alert("please try again later")
+  }
+  
 
 }
 
