@@ -1,5 +1,6 @@
 // Assignment code here
 //WHEN I click the button to generate a password
+//initialize string variables for all possible characters involved
 var specialCharacters ="\"$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
 var numeric = "0123456789";
 var lowercase = "abcdefghijklmnopqrstuvwxyz";
@@ -10,7 +11,6 @@ function randomNumber (min, max) {
 
   return value;
 };
-
 // random character generator functions
 //generates a random special character
 function randomSC() {
@@ -33,26 +33,61 @@ function randomNC() {
   return value;
 }
 
-
-console.log(randomSC(), randomLower(), randomUpper(), randomNC());
-
-//build an array of the four functions
-
-var randomArray = [randomSC, randomLower, randomUpper, randomNC]
+console.log(randomLower(), randomUpper(), randomSC(), randomNC());
 
 function generatePassword () {
-  //
+  //places four functions in an array
+  var workingArray = [randomLower, randomUpper, randomSC, randomNC];
+   console.log(workingArray); 
+   //gets the password length
   var passwordLength = prompt("Please enter the password length (8 to 128 characters)");
+  //asks whether a specific type of character should be included, removes it from the array if not
   var yesLowercase = confirm ("Would you like your password to include lower-case characters?");
-  console.log (yesLowercase);
-  console.log(passwordLength);
+  if (yesLowercase === false) {
+    var detector = workingArray.indexOf(randomLower);
+    workingArray.splice(detector, 1);
+    console.log(workingArray[0]);
+  }
+  var yesUppercase = confirm ("Would you like your password to include upper-case characters?");
+  if (yesUppercase === false) {
+    var detector = workingArray.indexOf(randomUpper);
+    workingArray.splice(detector, 1);
+  }
+  var yesSC = confirm ("Would you like your passowrd to include special characters?");
+  if (yesSC === false) {
+    var detector = workingArray.indexOf(randomSC);
+    workingArray.splice(detector, 1);
+  }
+  var yesNum = confirm ("Would you like your password to include numeric characters?")
+  if (yesNum === false) {
+    var detector = workingArray.indexOf(randomNC);
+    workingArray.splice(detector, 1);
+  }
+  //checks to see if there is at least one item in the array
+  if (workingArray.length < 1) {
+    alert("I'm sorry, you need to have at least one character type to generate a password, please try again");
+  //  var workingArray = [randomLower, randomUpper, randomSC, randomNC];
+    generatePassword();
+  }
+
+  console.log (yesLowercase, passwordLength, workingArray);
   password = "";
- for (var i=0; i<passwordLength; i++) {
-   var passchar = randomArray[randomNumber(0,3)]();
+  //ensures at least one type of character is in the password
+  for (var i=0; i<workingArray.length; i++) {
+    var passchar = workingArray[i]();
+    password = password + passchar;
+  }
+  //resets the password length variable
+  var runningLength = password.length;
+  //addresses the rest of the variable
+ for (var i=0; i<passwordLength - runningLength; i++) {
+   var passchar = workingArray[randomNumber(0,(workingArray.length-1))]();
    password = password + passchar;
   }
   console.log(password, password.length);
+  console.log(workingArray);
   console.log ("end of generatePassword function");
+  return password;
 }
 
 //THEN I am presented with a series of prompts for password criteria
