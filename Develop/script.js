@@ -11,20 +11,48 @@ function randomNumber (min, max) {
   return value;
 };
 
-for (var i=0; i<specialCharacters.length; i++) {
-  console.log (specialCharacters[i], lowercase[i], numeric[i], uppercase[i]);
+// random character generator functions
+//generates a random special character
+function randomSC() {
+  var value =  specialCharacters[randomNumber(0,(specialCharacters.length)-1)];
+  return value;
+};
+//generates a random lowercase character
+function randomLower() {
+  var value = lowercase[randomNumber(0,(lowercase.length)-1)];
+  return value;
+};
+//generates a random uppercase character
+function randomUpper() {
+  var value = uppercase[randomNumber(0,(uppercase.length)-1)];
+  return value;
+}
+//generates a random numeric character
+function randomNC() {
+  var value = numeric[randomNumber(0,(numeric.length)-1)];
+  return value;
 }
 
+
+console.log(randomSC(), randomLower(), randomUpper(), randomNC());
+
+//build an array of the four functions
+
+var randomArray = [randomSC, randomLower, randomUpper, randomNC]
+
 function generatePassword () {
-  console.log ("end of generatePassword function");
+  //
   var passwordLength = prompt("Please enter the password length (8 to 128 characters)");
+  var yesLowercase = confirm ("Would you like your password to include lower-case characters?");
+  console.log (yesLowercase);
   console.log(passwordLength);
   password = "";
  for (var i=0; i<passwordLength; i++) {
-   var passchar = lowercase[randomNumber(0,(lowercase.length-1))];
+   var passchar = randomArray[randomNumber(0,3)]();
    password = password + passchar;
   }
   console.log(password, password.length);
+  console.log ("end of generatePassword function");
 }
 
 //THEN I am presented with a series of prompts for password criteria
@@ -56,7 +84,6 @@ function writePassword() {
     window.alert("please try again later")
   }
   
-
 }
 
 // Add event listener to generate button
