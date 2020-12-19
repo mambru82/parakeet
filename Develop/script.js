@@ -36,11 +36,6 @@ function randomNC() {
 //console check to ensure the functions are working
 //console.log(randomLower(), randomUpper(), randomSC(), randomNC());
 
-//function to ensure password is a correct length
-var passBegins = function() {
-  var passwordLength = prompt("Please enter the password length (8 to 128 characters)");
-  return passwordLength;
-  }
 
 var charCriteria = function() {
   //places four functions in an array
@@ -51,21 +46,25 @@ var charCriteria = function() {
   if (yesLowercase === false) {
     var detector = workingArray.indexOf(randomLower);
     workingArray.splice(detector, 1);
+    window.alert ("Your password will not include lowercase characters.")
   }
   var yesUppercase = confirm ("Would you like your password to include upper-case characters?");
   if (yesUppercase === false) {
     var detector = workingArray.indexOf(randomUpper);
     workingArray.splice(detector, 1);
+    window.alert ("Your password will not include upper-case characters.");
   }
-  var yesSC = confirm ("Would you like your passowrd to include special characters?");
+  var yesSC = confirm ("Would you like your password to include special characters?");
   if (yesSC === false) {
     var detector = workingArray.indexOf(randomSC);
     workingArray.splice(detector, 1);
+    window.alert ("Your password will not include special characters");
   }
   var yesNum = confirm ("Would you like your password to include numeric characters?")
   if (yesNum === false) {
     var detector = workingArray.indexOf(randomNC);
     workingArray.splice(detector, 1);
+    window.alert ("Your password will not include numeric characters")
   }
   //checks to see if there is at least one item in the array
   if (workingArray.length < 1) {
@@ -82,17 +81,21 @@ var charCriteria = function() {
 }
 // generate password function
 function generatePassword () {
-  specLength = passBegins();
-  if (specLength < 8 || specLength > 128) {
-    window.alert("You did not enter a valid number, please enter a number between 8 and 128")
-    specLength = passBegins();
-    }
-  console.log("The length within the generate password is " + specLength);
-  workingArray = charCriteria();
+  var specLength = parseInt(prompt("Please enter the password length (8 to 128 characters)"));
+  if (!specLength) {
+    window.alert("You did not enter a valid value!");
+    generatePassword();
+  } else if (specLength < 8 || specLength > 128) {
+    window.alert("Your value was not within 8 and 128")
+    generatePassword();
+  } else {
+    window.alert("You have chosen to generate a password " + specLength + " characters long.");
+    console.log("The length within the generate password is " + specLength);
+    workingArray = charCriteria();
   //asks whether a specific type of character should be included, removes it from the array if not
 
-  console.log (specLength, workingArray);
-  password = "";
+    console.log (specLength, workingArray);
+    password = "";
   //ensures at least one type of character is in the password
   for (var i=0; i<workingArray.length; i++) {
     var passchar = workingArray[i]();
@@ -108,22 +111,10 @@ function generatePassword () {
   console.log(password, password.length);
   console.log(workingArray);
   console.log ("end of generatePassword function");
+  }
   return password;
 }
 
-//THEN I am presented with a series of prompts for password criteria
-//WHEN prompted for password criteria
-//THEN I select which criteria to include in the password
-//WHEN prompted for the length of the password
-//THEN I choose a length of at least 8 characters and no more than 128 characters
-//WHEN prompted for character types to include in the password
-//THEN I choose lowercase, uppercase, numeric, and/or special characters
-//WHEN I answer each prompt
-//THEN my input should be validated and at least one character type should be selected
-//WHEN all prompts are answered
-//THEN a password is generated that matches the selected criteria
-//WHEN the password is generated
-//THEN the password is either displayed in an alert or written to the page
 
 // Get references to the #generate element
 var generateBtn = document.querySelector("#generate");
