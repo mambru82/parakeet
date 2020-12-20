@@ -38,46 +38,47 @@ function randomNC() {
 
 
 var charCriteria = function() {
-  //places four functions in an array
-  var workingArray = [randomLower, randomUpper, randomSC, randomNC];
+  var workingArray = [];
   //checks the length of the array 
-  console.log(workingArray); 
+  console.log(workingArray);
+  while (workingArray.length===0) {
   var yesLowercase = confirm ("Would you like your password to include lower-case characters?");
-  if (yesLowercase === false) {
-    var detector = workingArray.indexOf(randomLower);
-    workingArray.splice(detector, 1);
-    window.alert ("Your password will not include lowercase characters.")
+  if (yesLowercase === true) {
+    workingArray.push(randomLower);
+    window.alert ("Your password will include lowercase characters.")
+  } else {
+    window.alert ("Your password will not include lowercase characters ")
   }
   var yesUppercase = confirm ("Would you like your password to include upper-case characters?");
-  if (yesUppercase === false) {
-    var detector = workingArray.indexOf(randomUpper);
-    workingArray.splice(detector, 1);
-    window.alert ("Your password will not include upper-case characters.");
+  if (yesUppercase === true) {
+    workingArray.push(randomUpper);
+    window.alert ("Your password will include upper-case characters.");
+  } else {
+    window.alert("Your password will not include upper-case characters.")
   }
   var yesSC = confirm ("Would you like your password to include special characters?");
-  if (yesSC === false) {
-    var detector = workingArray.indexOf(randomSC);
-    workingArray.splice(detector, 1);
-    window.alert ("Your password will not include special characters");
+  if (yesSC === true) {
+    workingArray.push(randomSC);
+    window.alert ("Your password will include  special characters");
+  } else {
+    window.alert("Your password will not include special characters")
   }
   var yesNum = confirm ("Would you like your password to include numeric characters?")
-  if (yesNum === false) {
-    var detector = workingArray.indexOf(randomNC);
-    workingArray.splice(detector, 1);
-    window.alert ("Your password will not include numeric characters")
+  if (yesNum === true) {
+    workingArray.push(randomNC);
+    window.alert ("Your password will include numeric characters")
+  } else {
+    window.alert ("Your password will not include numeric characters.")
   }
   //checks to see if there is at least one item in the array
-  if (workingArray.length < 1) {
+  if (workingArray.length === 0){
     alert("I'm sorry, you need to have at least one character type to generate a password, please try again");
-    var workingArray = [randomLower, randomUpper, randomSC, randomNC];
-    charCriteria();
-    console.log(workingArray);
-    return workingArray;
     }
   else {
+    console.log (workingArray);
     return workingArray;
   }
-  
+}
 }
 // generate password function
 function generatePassword () {
