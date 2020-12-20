@@ -1,5 +1,4 @@
 // Assignment code here
-//WHEN I click the button to generate a password
 //initialize string variables for all possible characters involved
 var specialCharacters ="\"$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
 var numeric = "0123456789";
@@ -36,14 +35,15 @@ function randomNC() {
 //console check to ensure the functions are working
 //console.log(randomLower(), randomUpper(), randomSC(), randomNC());
 
-
 var charCriteria = function() {
+  //initializes an empty array
   var workingArray = [];
   //checks the length of the array 
   console.log(workingArray);
   while (workingArray.length===0) {
   var yesLowercase = confirm ("Would you like your password to include lower-case characters?");
   if (yesLowercase === true) {
+    //adds the randomLower function
     workingArray.push(randomLower);
     window.alert ("Your password will include lowercase characters.")
   } else {
@@ -51,6 +51,7 @@ var charCriteria = function() {
   }
   var yesUppercase = confirm ("Would you like your password to include upper-case characters?");
   if (yesUppercase === true) {
+    //adds the randomUpper function
     workingArray.push(randomUpper);
     window.alert ("Your password will include upper-case characters.");
   } else {
@@ -58,6 +59,7 @@ var charCriteria = function() {
   }
   var yesSC = confirm ("Would you like your password to include special characters?");
   if (yesSC === true) {
+    //adds the randomSC function
     workingArray.push(randomSC);
     window.alert ("Your password will include  special characters");
   } else {
@@ -65,6 +67,7 @@ var charCriteria = function() {
   }
   var yesNum = confirm ("Would you like your password to include numeric characters?")
   if (yesNum === true) {
+    //adds the randomNC function
     workingArray.push(randomNC);
     window.alert ("Your password will include numeric characters")
   } else {
@@ -80,23 +83,25 @@ var charCriteria = function() {
   }
 }
 }
+
+var passLength = function() {
+  do {
+  var passwordLength = parseInt(prompt("Please enter the password length (8 to 128 characters)"));
+  if (!passwordLength || passwordLength < 8 || passwordLength > 128){
+    window.alert ("You need to enter a valid number between 8 and 128")
+  } else {
+    window.alert ("You have chosen to generate a password " + passwordLength + " characters long.")
+  }}
+  while (!passwordLength || passwordLength < 8 || passwordLength > 128) 
+  return passwordLength;
+}
+
 // generate password function
 function generatePassword () {
-  var specLength = parseInt(prompt("Please enter the password length (8 to 128 characters)"));
-  if (!specLength) {
-    window.alert("You did not enter a valid value!");
-    generatePassword();
-  } else if (specLength < 8 || specLength > 128) {
-    window.alert("Your value was not within 8 and 128")
-    generatePassword();
-  } else {
-    window.alert("You have chosen to generate a password " + specLength + " characters long.");
-    console.log("The length within the generate password is " + specLength);
-    workingArray = charCriteria();
-  //asks whether a specific type of character should be included, removes it from the array if not
-
-    console.log (specLength, workingArray);
-    password = "";
+  var specLength = passLength();
+  workingArray = charCriteria();
+  console.log (specLength, workingArray);
+  password = "";
   //ensures at least one type of character is in the password
   for (var i=0; i<workingArray.length; i++) {
     var passchar = workingArray[i]();
@@ -112,7 +117,6 @@ function generatePassword () {
   console.log(password, password.length);
   console.log(workingArray);
   console.log ("end of generatePassword function");
-  }
   return password;
 }
 
