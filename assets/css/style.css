@@ -134,4 +134,8 @@ button[disabled] {
   .btn {
     font-size: 0.8rem;
   }
+  .wrapper, .card {
+    text-align: center;
+    font-size: 12px;
+  }
 }
